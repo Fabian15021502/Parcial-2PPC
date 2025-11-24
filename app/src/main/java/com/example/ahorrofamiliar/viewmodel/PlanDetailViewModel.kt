@@ -1,5 +1,6 @@
 package com.example.ahorrofamiliar.viewmodel
 
+import Payment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ahorrofamiliar.data.model.*
@@ -18,25 +19,32 @@ class PlanDetailViewModel(
     private val _payments = MutableStateFlow<List<Payment>>(emptyList())
     val payments: StateFlow<List<Payment>> = _payments
 
-    private val _message = MutableStateFlow<String?>(null)
-    val message: StateFlow<String?> = _message
+    // ✅ CAMBIO: Ya no es nullable
+    private val _message = MutableStateFlow("")
+    val message: StateFlow<String> = _message
 
-    fun loadPlan(id: Long) {
+    private val _loading = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = _loading
+
+    fun loadPlan(id: String) {
         viewModelScope.launch {
+            _loading.value = true
             repo.getPlanDetail(id).onSuccess {
                 _plan.value = it
+                _loading.value = false
             }.onFailure {
-                _message.value = it.message
+                _message.value = it.message ?: "Error al cargar el plan"
+                _loading.value = false
             }
         }
     }
 
-    fun loadPayments(id: Long) {
+    fun loadPayments(id: String) {
         viewModelScope.launch {
             repo.getPayments(id).onSuccess {
                 _payments.value = it
             }.onFailure {
-                _message.value = it.message
+                _message.value = it.message ?: "Error al cargar pagos"
             }
         }
     }
@@ -44,11 +52,15 @@ class PlanDetailViewModel(
     fun registerPayment(request: CreatePaymentRequest) {
         viewModelScope.launch {
             repo.createPayment(request).onSuccess {
-                _message.value = "Pago registrado"
+                _message.value = "Pago registrado exitosamente"
                 loadPayments(request.planId)
             }.onFailure {
-                _message.value = it.message
+                _message.value = it.message ?: "Error al registrar pago"
             }
         }
+    }
+
+    fun clearMessage() {
+        _message.value = ""
     }
 }

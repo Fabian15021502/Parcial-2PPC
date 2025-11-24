@@ -1,9 +1,18 @@
-package com.example.ahorrofamiliar.data.model
+import com.google.gson.annotations.SerializedName
 
 data class Payment(
-    val id: Long,
-    val planId: Long,
-    val memberId: Long,
-    val monto: Double,
-    val fecha: String
+    @SerializedName("_id")
+    val id: String? = null,
+
+    @SerializedName("planId")
+    val planId: String? = null,
+
+    @SerializedName("memberId")
+    val memberId: String? = null,
+
+    @SerializedName("amount")  // Cambiado de "monto" a "amount"
+    val monto: Double? = null,
+
+    @SerializedName("date")  // Cambiado de "fecha" a "date"
+    val fecha: String? = null
 )

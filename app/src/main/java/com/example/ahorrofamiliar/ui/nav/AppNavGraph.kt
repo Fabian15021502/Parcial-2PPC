@@ -23,7 +23,8 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable("planDetail/{id}") { backStack ->
-            val id = backStack.arguments?.getString("id")?.toLong()!!
+            // Cambia: obtener como String sin convertir a Long
+            val id = backStack.arguments?.getString("id") ?: ""
             PlanDetailScreen(planId = id)
         }
     }

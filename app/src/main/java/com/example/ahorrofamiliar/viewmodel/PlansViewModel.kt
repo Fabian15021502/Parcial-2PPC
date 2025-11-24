@@ -18,17 +18,27 @@ class PlansViewModel(
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
+    // ✅ CAMBIO: Ya no es nullable
+    private val _error = MutableStateFlow("")
+    val error: StateFlow<String> = _error
 
     fun loadPlans() {
         viewModelScope.launch {
             _loading.value = true
+            _error.value = "" // Limpiar error previo
+
             val result = repo.getPlans()
             _loading.value = false
 
-            result.onSuccess { _plans.value = it }
-                .onFailure { _error.value = it.message }
+            result.onSuccess {
+                _plans.value = it
+            }.onFailure {
+                _error.value = it.message ?: "Error al cargar planes"
+            }
         }
+    }
+
+    fun clearError() {
+        _error.value = ""
     }
 }
