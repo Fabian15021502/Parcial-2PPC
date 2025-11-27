@@ -1,7 +1,6 @@
 package com.example.ahorrofamiliar.viewmodel
 
-import Member
-import Payment
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ahorrofamiliar.data.model.*
@@ -115,8 +114,7 @@ class PlanDetailViewModel(private val repo: PlanRepository) : ViewModel() {
                 val result = repo.createPayment(request)
                 result.onSuccess { payment ->
                     _message.value = "Pago registrado exitosamente"
-                    // Recargar pagos después de registrar uno nuevo
-                    request.planId?.let { loadPayments(it) }
+                    request.planId?.let { loadPayments(it) } // actualizar lista de pagos
                 }.onFailure { exception ->
                     _message.value = "Error al registrar pago: ${exception.message}"
                 }
@@ -125,4 +123,5 @@ class PlanDetailViewModel(private val repo: PlanRepository) : ViewModel() {
             }
         }
     }
+
 }

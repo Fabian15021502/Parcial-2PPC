@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410078315488",
+    "project_id": "ahorro-familiar-81dcb",
+    "storage_bucket": "ahorro-familiar-81dcb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410078315488:android:2b535331b3602dc81e6185",
+        "android_client_info": {
+          "package_name": "com.example.ahorrofamiliar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKJa_feDJwYyuPROaG2G3Cp2x_mV8d4bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

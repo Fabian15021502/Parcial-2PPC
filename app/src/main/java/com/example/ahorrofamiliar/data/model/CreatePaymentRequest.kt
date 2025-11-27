@@ -1,7 +1,17 @@
 package com.example.ahorrofamiliar.data.model
+
+import com.google.gson.annotations.SerializedName
+
 data class CreatePaymentRequest(
+    @SerializedName("planId")
     val planId: String,
+
+    @SerializedName("memberId")
     val memberId: String,
-    val monto: Double,
-    val fecha: String
+
+    @SerializedName("amount")
+    val amount: Double,
+
+    @SerializedName("date")
+    val date: String
 )

@@ -1,7 +1,5 @@
 package com.example.ahorrofamiliar.data.repository
 
-import Member
-import Payment
 import com.example.ahorrofamiliar.data.api.ApiService
 import com.example.ahorrofamiliar.data.model.*
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +26,14 @@ class PlanRepository(private val api: ApiService) {
     suspend fun createPayment(request: CreatePaymentRequest): Result<Payment> = safeCall {
         api.createPayment(request)
     }
+
+    suspend fun createMember(request: CreateMemberRequest): Result<Member> = safeCall {
+        api.createMember(request)
+    }
+
+    suspend fun createPlan(request: CreatePlanRequest) =
+        safeCall { api.createPlan(request) }
+
 
     private suspend fun <T> safeCall(call: suspend () -> retrofit2.Response<T>): Result<T> =
         withContext(Dispatchers.IO) {
